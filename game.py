@@ -48,17 +48,28 @@ class TicTacToeGame:
         print('-----------')
         print(f' 7 | 8 | 9 \n')
 
+    def current_battlefield(self):
+        print(f"\n {self.moves['1']} | {self.moves['2']} | {self.moves['3']} ")
+        print('-----------')
+        print(f" {self.moves['4']} | {self.moves['5']} | {self.moves['6']} ")
+        print('-----------')
+        print(f" {self.moves['7']} | {self.moves['8']} | {self.moves['9']} \n")
+
     def rules(self):
         # rules
         print('Rules of the game')
 
-    def play_round(self, player):
-        # wejscie do gry
-        print(f"Player with '{player}' symbol is now playing.")
-
-        # wybranie pola przez 1 gracza
-
-        # sprawdzenie czy wygrane
+    def play_round(self, player_symbol):
+        move = (input("Please select position for next move, from 1 to 9, don't use number "
+                      "which is already taken: "))
+        if move not in self.p_moves or len(move) != 1:
+            print('Ops! You have chosed wrong symbol or already taken, try again!\n')
+            return True
+        else:
+            self.p_moves = self.p_moves.replace(move, "")
+            self.moves[move] = player_symbol
+            self.current_battlefield()
+            return False
 
     def win(self):
         pass
@@ -70,23 +81,25 @@ class TicTacToeGame:
         print('Now first player will choose symbol.')
         while True:
             try:
-                # zastanowic sie jak wybierac graczy
-                a = input("Please pick 'X' or 'O': ").lower()
-                assert a in self.p_signs
-                b = self.p_signs.replace(a, '')
+                player_now = input("Please pick 'X' or 'O': ").lower()
+                assert player_now in self.p_signs
+                player_later = self.p_signs.replace(player_now, '')
                 break
             except AssertionError:
-                print('Provided sign is not X or O. Try again')
+                print('Provided sign is not X or O. Try again!\n')
 
         while True:
-            self.play_round(a)
+            round_on = True
+            print(f"Player with '{player_now}' symbol is now playing.")
+            while round_on:
+                round_on = self.play_round(player_now)
 
             if self.win():
                 break
 
-            t = a
-            a = b
-            b = t
+            temporary_player = player_now
+            player_now = player_later
+            player_later = temporary_player
 
             break
 
