@@ -112,7 +112,7 @@ class TicTacToeGame:
 # while sign not in patt:
 #     sign = input("Please pick 'X' or 'O': ").lower()
 # drugi = patt.replace(sign, '')
-#
+# dupa dupa dupa
 #
 # while True:
 #     move = '0'
